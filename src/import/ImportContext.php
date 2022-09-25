@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\import;
 
+use function Symfony\Component\String\u;
+
 final class ImportContext implements ImportContextInterface
 {
 
@@ -22,9 +24,10 @@ final class ImportContext implements ImportContextInterface
      */
     public function execute(string $uri): array
     {
-//        foreach ($this->imports as $import){
-//
-//        }
-        return [];
+        return match(u($uri)->afterLast('.')->toString()){
+            'csv' => $this->imports[0]->import($uri),
+            'json' => $this->imports[1]->import($uri),
+            default => throw new \RuntimeException('No importer found for '. $uri),
+        };
     }
 }

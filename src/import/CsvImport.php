@@ -21,8 +21,7 @@ class CsvImport implements ImportInterface
         /** @var array{string, string, string} $data */
         while(($data = fgetcsv($handle, 1000, ',')) !== false){
 
-
-            $users[] = new User($data[0], $data[], $data[2]);
+            $users[] = new User($data[0], $data[1], $data[2]);
         }
 
         fclose($handle);
