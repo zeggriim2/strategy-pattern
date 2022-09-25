@@ -8,7 +8,7 @@ use App\Entity\User;
 
 interface ImportContextInterface
 {
-    public function register(ImportInterface $import): ImportContextInterface;
+    public function register(string $extension, ImportInterface $import): ImportContextInterface;
 
     /**
      * @param string $uri

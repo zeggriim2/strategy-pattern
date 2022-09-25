@@ -9,12 +9,12 @@ use function Symfony\Component\String\u;
 final class ImportContext implements ImportContextInterface
 {
 
-    /** @var array<array-key, ImportInterface>  */
+    /** @var array<string, ImportInterface>  */
     private array $imports = [];
 
-    public function register(ImportInterface $import): self
+    public function register(string $extension, ImportInterface $import): self
     {
-        $this->imports[] = $import;
+        $this->imports[$extension] = $import;
 
         return $this;
     }
@@ -24,10 +24,6 @@ final class ImportContext implements ImportContextInterface
      */
     public function execute(string $uri): array
     {
-        return match(u($uri)->afterLast('.')->toString()){
-            'csv' => $this->imports[0]->import($uri),
-            'json' => $this->imports[1]->import($uri),
-            default => throw new \RuntimeException('No importer found for '. $uri),
-        };
+        return $this->imports[u($uri)->afterLast('.')->toString()]->import($uri);
     }
 }
