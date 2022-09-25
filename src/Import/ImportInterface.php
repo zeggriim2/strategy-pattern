@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\import;
+namespace App\Import;
 
 use App\Entity\User;
 
@@ -14,5 +14,5 @@ interface ImportInterface
      */
     public function import(string $uri): array;
 
-    public function supports(string $uri): bool;
+    public static function supports(string $uri): bool;
 }

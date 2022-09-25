@@ -5,29 +5,23 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Entity\User;
-use App\import\CsvImport;
-use App\import\ImportContext;
-use App\import\JsonImport;
-use PHPUnit\Framework\TestCase;
+use App\Import\ImportContextInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class ImportTest extends TestCase
+class ImportTest extends KernelTestCase
 {
-    private ImportContext $importContext;
-
-    protected function setUp(): void
-    {
-        $this->importContext = (new ImportContext())
-            ->register(new CsvImport())
-            ->register(new JsonImport())
-        ;
-    }
-
     /**
      * @dataProvider providerUri
      */
     public function testImport(string $uri): void
     {
-        $users = $this->importContext->execute($uri);
+
+        self::bootKernel();
+
+        /** @var ImportContextInterface $importsContext */
+        $importsContext = static::getContainer()->get(ImportContextInterface::class);
+
+        $users = $importsContext->execute($uri);
         self::assertCount(3, $users);
         self::assertContainsOnlyInstancesOf(User::class, $users);
     }

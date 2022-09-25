@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\import;
+namespace App\Import;
 
 use App\Entity\User;
 
@@ -25,7 +25,7 @@ class JsonImport implements ImportInterface
         );
     }
 
-    public function supports(string $uri): bool
+    public static function supports(string $uri): bool
     {
         return 'json' === pathinfo($uri, PATHINFO_EXTENSION);
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\import;
+namespace App\Import;
 
 use App\Entity\User;
 
@@ -29,7 +29,7 @@ class CsvImport implements ImportInterface
         return $users;
     }
 
-    public function supports(string $uri): bool
+    public static function supports(string $uri): bool
     {
         return 'csv' === pathinfo($uri, PATHINFO_EXTENSION);
     }
