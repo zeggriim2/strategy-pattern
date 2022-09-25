@@ -17,8 +17,8 @@ class ImportTest extends TestCase
     protected function setUp(): void
     {
         $this->importContext = (new ImportContext())
-            ->register('csv', new CsvImport())
-            ->register('json', new JsonImport())
+            ->register(new CsvImport())
+            ->register(new JsonImport())
         ;
     }
 

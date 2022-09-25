@@ -9,12 +9,12 @@ use function Symfony\Component\String\u;
 final class ImportContext implements ImportContextInterface
 {
 
-    /** @var array<string, ImportInterface>  */
+    /** @var array<array-key, ImportInterface>  */
     private array $imports = [];
 
-    public function register(string $extension, ImportInterface $import): self
+    public function register(ImportInterface $import): self
     {
-        $this->imports[$extension] = $import;
+        $this->imports[] = $import;
 
         return $this;
     }
@@ -24,6 +24,10 @@ final class ImportContext implements ImportContextInterface
      */
     public function execute(string $uri): array
     {
-        return $this->imports[u($uri)->afterLast('.')->toString()]->import($uri);
+        foreach($this->imports as $extension => $import){
+            if($import->supports($uri)){
+                return $import->import($uri);
+            }
+        }
     }
 }

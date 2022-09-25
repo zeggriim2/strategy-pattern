@@ -13,4 +13,6 @@ interface ImportInterface
      * @return array<array-key, User>
      */
     public function import(string $uri): array;
+
+    public function supports(string $uri): bool;
 }

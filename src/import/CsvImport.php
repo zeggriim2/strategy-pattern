@@ -28,4 +28,11 @@ class CsvImport implements ImportInterface
 
         return $users;
     }
+
+    public function supports(string $uri): bool
+    {
+        return 'csv' === pathinfo($uri, PATHINFO_EXTENSION);
+    }
+
+
 }

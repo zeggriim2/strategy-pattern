@@ -24,4 +24,9 @@ class JsonImport implements ImportInterface
             $data
         );
     }
+
+    public function supports(string $uri): bool
+    {
+        return 'json' === pathinfo($uri, PATHINFO_EXTENSION);
+    }
 }
